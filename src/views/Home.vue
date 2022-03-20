@@ -1,47 +1,78 @@
 <template>
+<div>
+  <div v-if="loading">
+    <Loading />
+  </div>
   <div class="container">
-
-    <div>
-      <div class="titulo-lermais">
-        <h1>Ultimos animes</h1>
-        <a href="#">Ver mais</a>
-      </div>
-      <div class="card-list">
-      <div v-for="(card, index) in data.documents" :key="index">
-          <Card :title="card.titles.en" 
-                :url="card.cover_image" 
-                :description="card.descriptions.en" />
-      </div>
+    <div class="main" v-if="data">
+      <div class="bloco divisor">
+        <HeaderCard title="Ultimos animes" endpoint="ultimos" />
+        <div class="card-list">
+          <div v-for="(card, index) in data.documents" :key="index">
+              <Card :title="card.titles.en" 
+                    :url="card.cover_image"
+                    @click="abreAnime(card.id)" />
+          </div>
+        </div>
+     </div>
+     <div class="bloco">
+        <HeaderCard title="Traillers" endpoint="traillers" />
+        <div class="trailler-list">
+          <div v-for="(card, index) in data.documents" :key="index">
+              <CardTrailler :title="card.titles.en" 
+                    :url="card.banner_image" 
+                    :description="card.descriptions.en" 
+                    :genero="card.genres[0]"
+                    @click="abreAnime(index+1)"
+                     />
+          </div>
+        </div>
+     </div>
+     
+    </div>
+    <div class="aside">
+      <div class="populares">  
     </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import Card from '@/components/Card.vue'
+import CardTrailler from '@/components/CardTrailler.vue'
+import HeaderCard from '@/components/HeaderCard.vue'
 import { api } from "../services.js"  
+
 export default {
   name: "Card.vue",
   data(){
     return {
       data: [],
-      perPage: 5
+      perPage: 10,
+      loading: false
     }
   },
   methods: {
     getAll(){
-      return api.get("/v1/anime?per_page=" + this.perPage)
+      this.loading = true
+      return  api.get("/v1/anime?per_page" + this.perPage)
       .then( response => {
         console.log(response.data.data);
           this.data = response.data.data
+          this.loading = false
         }
       ).catch(err => {
-        console.log(err)
+        console.error(err);
       })
+    },
+    abreAnime(id){
+      console.log(id);
+      this.$router.push({ name: 'anime', params: { id } })
     }
   },
   components: {
-    Card
+    Card, CardTrailler, HeaderCard
   },
   mounted() {
     this.getAll()
@@ -51,37 +82,35 @@ export default {
 
 <style>
 
-.card-list {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
+.container {
   background: #000;
+}
+
+.bloco {
   padding: 20px;
 }
 
-.titulo-lermais {
+.card-list {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 10px;
+  gap: 15px;
+  background: #000;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
-.titulo-lermais a {
-  padding: 6px 10px;
-  border-radius: 20px;
-  color: #fff;
-  background: tomato;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 14px;
+.trailler-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
 }
 
-.titulo-lermais h1 {
-  color: #fff;
-  font-size: 24px;
-  padding-left: 10px;
-  border-left: 4px solid tomato;
+.card-list::-webkit-scrollbar {
+  display: none;
+}
+
+.divisor {
+  border-bottom: 1px solid #333;
 }
 
 </style>

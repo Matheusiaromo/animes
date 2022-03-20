@@ -1,9 +1,9 @@
-/* import { defineStore } from 'pinea'
+import { defineStore } from 'pinia'
 
-const useAnimeStore = defineStore('animeStore', {
-  state () => {
+export const animeStore = defineStore('anime', {
+  state: () => {
     return {
-
+      anime: []
     }
   }
-}) */
+})

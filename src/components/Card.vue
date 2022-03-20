@@ -11,7 +11,7 @@
 
 </template>
 
-<script>
+<script scoped>
 export default {
   name: "Card.vue",
   props: ["url", "title", "description"],
@@ -21,16 +21,16 @@ export default {
 <style>
 
 .card {
-  width: 150px;
-  border-radius: 10px;
+  width: 200px;
   height: 100%;
 }
 .card img {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
+  border-radius: 5px;
 }
-.card .title{
+.card .title {
   text-align: start;
   font-size: 14px;
   margin: 0px;
@@ -39,7 +39,7 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 1; 
   -webkit-box-orient: vertical; 
-  padding-top: 3px;
+  padding-top: 5px;
   color: #fff;
 }
 

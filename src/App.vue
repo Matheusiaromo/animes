@@ -1,15 +1,14 @@
 <template>
-  <Home />
+  <div>
+      <router-view />
+  </div>
 </template>
 
 <script>
-import Home from './views/Home.vue'
 
 export default {
   name: 'App',
-  components: {
-    Home
-  }
+
 }
 </script>
 
@@ -31,7 +30,7 @@ export default {
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
 }
