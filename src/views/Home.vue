@@ -9,9 +9,11 @@
         <HeaderCard title="Ultimos animes" endpoint="ultimos" />
         <div class="card-list">
           <div v-for="(card, index) in data.documents" :key="index">
-              <Card :title="card.titles.en" 
+              <router-link :to="{name: 'anime', params: {id: card.id}}">
+                <Card :title="card.titles.en" 
                     :url="card.cover_image"
-                    @click="abreAnime(card.id)" />
+               />
+              </router-link>
           </div>
         </div>
      </div>
@@ -19,12 +21,14 @@
         <HeaderCard title="Traillers" endpoint="traillers" />
         <div class="trailler-list">
           <div v-for="(card, index) in data.documents" :key="index">
+            <router-link :to="{name: 'anime', params: {id: card.id}}">
               <CardTrailler :title="card.titles.en" 
                     :url="card.banner_image" 
                     :description="card.descriptions.en" 
                     :genero="card.genres[0]"
                     @click="abreAnime(index+1)"
                      />
+            </router-link>
           </div>
         </div>
      </div>
@@ -66,10 +70,6 @@ export default {
         console.error(err);
       })
     },
-    abreAnime(id){
-      console.log(id);
-      this.$router.push({ name: 'anime', params: { id } })
-    }
   },
   components: {
     Card, CardTrailler, HeaderCard

@@ -24,4 +24,8 @@ div {
   left: 0;
 }
 
+div span {
+  color: #fff;
+}
+
 </style>

@@ -1,33 +1,33 @@
 <template>
     
     <div>
-      <div v-if="loading" class="loading">
+      <div v-if="data">
+        <div class="container">
+          <div class="banner-title">
+            <div class="banner">
+              <img :src="data.cover_image" alt="">
+            </div>
+            <div class="title">
+              <h1 class="title-anime">{{data.titles.en}}</h1>
+              <span class="year">{{data.season_year}}</span>
+              <hr>
+              <span class="score">{{data.score}}</span>
+              <hr>
+              <ul class="categorias">
+                <li v-for="(categoria, index) in data.genres" :key="index">
+                {{categoria}}
+                </li>
+              </ul>
+            </div> 
+          </div>
+          <div class="description">
+          <p v-html="data.descriptions.en"></p>
+          </div>
+        </div>
+      </div>
+      <div v-else class="loading">
         <Loading />
       </div>
-      <div>
-      <div class="container">
-        <div class="banner-title">
-          <div class="banner">
-            <img :src="data.cover_image" alt="">
-          </div>
-          <div class="title">
-            <!-- <h1 class="title-anime">{{data.titles.en}}</h1> -->
-            <span class="year">{{data.season_year}}</span>
-            <hr>
-             <span class="score">{{data.score}}</span>
-            <hr>
-            <div>
-              <ul v-for="(categoria, index) in data.genres" :key="index" class="categorias">
-                <span>{{categoria}}</span>
-              </ul>
-            </div>
-          </div> 
-        </div>
-        <div>
-        <!-- <p v-html="data.description.en"></p> -->
-        </div>
-      </div>
-    </div>
     </div>
 
 </template>
@@ -40,7 +40,7 @@ export default {
   name: "SinglePost",
   data() {
     return {
-      data: [],
+      data: null,
       loading: false
     }
   },
@@ -79,16 +79,23 @@ img {
 }
 
 .banner-title .categorias {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
   list-style: none;
-  display: inline;
 }
 
-.banner-title .categorias span {
-  color: grey;
-  font-size: 12px;
+.banner-title .categorias li {
+  background: grey;
+  color: #fff;
   padding: 5px;
-  background: #000;
-  margin: 4px;
+}
+
+ .description p{
+  color: #fff;
+  text-align: start;
+  padding-top: 10px;
 }
 
 </style>
