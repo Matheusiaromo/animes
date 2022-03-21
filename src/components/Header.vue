@@ -70,7 +70,7 @@ header ul .link-nav:hover {
   padding: 5px;
 }
 
-.router-link-active .router-link-exact-active .link-nav{
+.router-link-active .router-link-exact-active .link-nav {
   color: tomato;
 }
 </style>
