@@ -8,6 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.0",
+    "@mdi/js": "^6.5.95",
+    "@yeliulee/vue-mdi-svg": "^1.0.4",
     "axios": "^0.26.1",
     "core-js": "^3.6.5",
     "pinia": "^2.0.12",
