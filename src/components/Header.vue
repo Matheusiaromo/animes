@@ -12,16 +12,18 @@
           <router-link to="/anime/3">Contato</router-link>
         </ul>
       </nav>
-      <div class="search">
-        <input type="text" placeholder="Buscar..." />
-      </div>
+      <search-bar></search-bar>
     </header>
   </div>
 </template>
 
 <script>
+import SearchBar from "@/components/SearchBar.vue";
 export default {
   name: "Header",
+  components: {
+    SearchBar
+  }
 };
 </script>
 
@@ -77,12 +79,6 @@ ul a:hover::after {
 
 .container {
   padding: 10px 20px;
-}
-
-.search input {
-  font-size: 16px;
-  padding: 5px;
-  border-radius: 5px;
 }
 
 a.router-link-exact-active {

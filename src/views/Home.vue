@@ -25,7 +25,6 @@
                   :url="card.banner_image"
                   :description="card.descriptions.en"
                   :genero="card.genres[0]"
-                  @click="abreAnime(index + 1)"
                 />
               </router-link>
             </div>
@@ -50,7 +49,7 @@ export default {
   data() {
     return {
       data: [],
-      perPage: 10,
+      perPageAnime: 10,
       loading: false,
     };
   },
@@ -58,7 +57,7 @@ export default {
     getAll() {
       this.loading = true;
       return api
-        .get("/v1/anime?per_page" + this.perPage)
+        .get("/v1/anime?per_page=" + this.perPageAnime)
         .then((response) => {
           console.log(response.data.data);
           this.data = response.data.data;
