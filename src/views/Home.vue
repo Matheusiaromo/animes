@@ -4,11 +4,11 @@
     <Loading />
   </div>
   <div class="container">
-    <div class="main" v-if="data">
+    <div class="main" v-if="capas">
       <div class="bloco divisor">
         <HeaderCard title="Ultimos animes" endpoint="ultimos" />
         <div class="card-list">
-          <div v-for="(card, index) in data.documents" :key="index">
+          <div v-for="(card, index) in capas.documents" :key="index">
               <router-link :to="{name: 'anime', params: {id: card.id}}">
                 <Card :title="card.titles.en" 
                     :url="card.cover_image"
@@ -20,7 +20,7 @@
      <div class="bloco">
         <HeaderCard title="Traillers" endpoint="traillers" />
         <div class="trailler-list">
-          <div v-for="(card, index) in data.documents" :key="index">
+          <div v-for="(card, index) in capas.documents" :key="index">
             <router-link :to="{name: 'anime', params: {id: card.id}}">
               <CardTrailler :title="card.titles.en" 
                     :url="card.banner_image" 
@@ -52,30 +52,46 @@ export default {
   name: "Card.vue",
   data(){
     return {
-      data: [],
+      capas: [],
+      page: 1,
       perPage: 10,
-      loading: false
+      loading: false,
+      currentPage: 1
     }
   },
   methods: {
-    getAll(){
+    getCapas(){
       this.loading = true
-      return  api.get("/v1/anime?per_page" + this.perPage)
+      const perPageCapas = 10
+      return  api.get("/v1/anime?per_page=" + perPageCapas)
       .then( response => {
         console.log(response.data.data);
-          this.data = response.data.data
+          this.capas = response.data.data
           this.loading = false
         }
       ).catch(err => {
         console.error(err);
       })
     },
+    getVideos(){
+      this.loading = true
+      return  api.get(`/v1/anime?per_page=${this.perPage}&page=${this.page}`)
+      .then( response => {
+        console.log(response.data.data);
+          this.capas = response.data.data
+          this.loading = false
+        }
+      ).catch(err => {
+        console.error(err);
+      })
+    }
   },
   components: {
     Card, CardTrailler, HeaderCard
   },
   mounted() {
-    this.getAll()
+    this.getCapas()
+    this.getVideos()
   },
 }
 </script>
